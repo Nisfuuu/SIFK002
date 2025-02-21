@@ -1,16 +1,10 @@
-// src/Dashboard.js
 import React, { useEffect, useState } from "react";
 import { auth, db } from "./firebase";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify"; // Import toast
-import {
-  collection,
-  addDoc,
-  onSnapshot,
-  deleteDoc,
-  doc,
-  updateDoc,
-} from "firebase/firestore";
+import { collection, addDoc, onSnapshot, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import Navbar from "./Navbar"; // Import Navbar
+import "./Dashboard.css"; // Import file CSS
 
 const Dashboard = () => {
   const [tasks, setTasks] = useState([]);
@@ -159,114 +153,87 @@ const Dashboard = () => {
   };
 
   return (
-    <div>
-      <h2>Dashboard</h2>
-      <p>Selamat datang, {auth.currentUser?.email.split("@")[0]}!</p>
-      <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
-        <button onClick={handleLogout}>Logout</button>
-        <button onClick={() => navigate("/group-list")}>Lihat Grup</button>
-        <button onClick={() => navigate("/contact-list")}>
-          Lihat Kontak Dosen
-        </button>
-        <button onClick={() => navigate("/elearning-list")}>
-          Lihat E-Learning
-        </button>
-      </div>
+    <div className="dashboard-backround">
+      <Navbar onLogout={handleLogout} />
+      <div className="dashboard-container">
+        <h2>Dashboard</h2>
+        <p>Selamat datang, {auth.currentUser?.email.split("@")[0]}!</p>
 
-      <h3>Daftar Catatan Penting</h3>
-      {isAdmin && (
-        <form onSubmit={handleAddNote}>
-          <textarea
-            placeholder="Tulis catatan penting di sini..."
-            value={noteContent}
-            onChange={(e) => setNoteContent(e.target.value)}
-            required
-          />
-          <button type="submit">Tambah Catatan</button>
-        </form>
-      )}
-
-      <ul>
-        {notes.map((note) => (
-          <li key={note.id}>
-            {note.content}
-            {isAdmin && (
-              <>
-                <button onClick={() => handleEditNote(note)}>Edit</button>
-                <button onClick={() => handleDeleteNote(note.id)}>Hapus</button>
-              </>
-            )}
-          </li>
-        ))}
-      </ul>
-
-      <h3>Daftar Tugas</h3>
-      <ul>
-        {tasks.map((task) => (
-          <li key={task.id}>
-            <strong>Pelajaran:</strong> {task.namaPelajaran} <br />
-            <strong>Dosen:</strong> {task.namaDosen} <br />
-            <strong>Tugas:</strong> {task.namaTugas} <br />
-            <strong>Deadline:</strong>{" "}
-            {new Date(task.deadline).toLocaleString()} <br />
-            {isAdmin && (
-              <>
-                <button onClick={() => handleEditTask(task)}>Edit</button>
-                <button onClick={() => handleDeleteTask(task.id)}>Hapus</button>
-              </>
-            )}
-          </li>
-        ))}
-      </ul>
-
-      {isAdmin && (
-        <>
-          <h3>Tambah / Update Tugas</h3>
-          <form onSubmit={handleAddTask}>
-            <input
-              type="text"
-              placeholder="Nama Pelajaran"
-              value={namaPelajaran}
-              onChange={(e) => setNamaPelajaran(e.target.value)}
-              required
-            />
-            <input
-              type="text"
-              placeholder="Nama Dosen"
-              value={namaDosen}
-              onChange={(e) => setNamaDosen(e.target.value)}
-              required
-            />
-            <input
-              type="text"
-              placeholder="Nama Tugas"
-              value={namaTugas}
-              onChange={(e) => setNamaTugas(e.target.value)}
-              required
-            />
-            <input
-              type="datetime-local"
-              placeholder="Deadline"
-              value={deadline}
-              onChange={(e) => setDeadline(e.target.value)}
-              required
-            />
-            <button type="submit">
-              {editingTaskId ? "Update Tugas" : "Tambah Tugas"}
+        <h3>Daftar Catatan Penting</h3>
+        {isAdmin && (
+          <form onSubmit={handleAddNote} className="note-form">
+            <textarea className="input" placeholder="Tulis catatan penting di sini..." value={noteContent} onChange={(e) => setNoteContent(e.target.value)} required />
+            <button type="submit" className="button">
+              Tambah Catatan
             </button>
           </form>
-        </>
-      )}
+        )}
 
-      <nav>
-        <h3>Grup Navigasi</h3>
-        <ul>
-          <li>Beranda</li>
-          <li>Tugas</li>
-          <li>Profil</li>
-          <li>Bantuan</li>
+        <ul className="note-list">
+          {notes.map((note) => (
+            <li className="note" key={note.id}>
+              {note.content}
+              {isAdmin && (
+                <>
+                  <button onClick={() => handleEditNote(note)} className="button-edit">
+                    Edit
+                  </button>
+                  <button onClick={() => handleDeleteNote(note.id)} className="button-hapus">
+                    Hapus
+                  </button>
+                </>
+              )}
+            </li>
+          ))}
         </ul>
-      </nav>
+
+        <h3>Daftar Tugas</h3>
+        <ul className="task-list">
+          {tasks.map((task) => (
+            <li key={task.id}>
+              <strong>Pelajaran:</strong> {task.namaPelajaran} <br />
+              <strong>Dosen:</strong> {task.namaDosen} <br />
+              <strong>Tugas:</strong> {task.namaTugas} <br />
+              <strong>Deadline:</strong> {new Date(task.deadline).toLocaleString()} <br />
+              {isAdmin && (
+                <>
+                  <button onClick={() => handleEditTask(task)} className="button-edit">
+                    Edit
+                  </button>
+                  <button onClick={() => handleDeleteTask(task.id)} className="button-hapus">
+                    Hapus
+                  </button>
+                </>
+              )}
+            </li>
+          ))}
+        </ul>
+
+        {isAdmin && (
+          <>
+            <h3>Tambah / Update Tugas</h3>
+            <form onSubmit={handleAddTask} className="task-form">
+              <input className="input" type="text" placeholder="Nama Pelajaran" value={namaPelajaran} onChange={(e) => setNamaPelajaran(e.target.value)} required />
+              <input className="input" type="text" placeholder="Nama Dosen" value={namaDosen} onChange={(e) => setNamaDosen(e.target.value)} required />
+              <input className="input" type="text" placeholder="Nama Tugas" value={namaTugas} onChange={(e) => setNamaTugas(e.target.value)} required />
+              <input className="input" type="datetime-local" placeholder="Deadline" value={deadline} onChange={(e) => setDeadline(e.target.value)} required />
+              <button type="submit" className="button">
+                {editingTaskId ? "Update Tugas" : "Tambah Tugas"}
+              </button>
+            </form>
+          </>
+        )}
+
+        <nav className="navigation">
+          <h3>Grup Navigasi</h3>
+          <ul>
+            <li>Beranda</li>
+            <li>Tugas</li>
+            <li>Profil</li>
+            <li>Bantuan</li>
+          </ul>
+        </nav>
+      </div>
     </div>
   );
 };

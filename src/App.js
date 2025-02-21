@@ -6,12 +6,14 @@ import GroupList from "./GroupList";
 import ContactList from "./ContactList";
 import ElearningList from "./ElearningList";
 import Login from "./Login1";
+import Register from "./Register";
 
 const App = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/group-list" element={<GroupList />} />
         <Route path="/contact-list" element={<ContactList />} />
