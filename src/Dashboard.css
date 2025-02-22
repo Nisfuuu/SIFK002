@@ -506,3 +506,75 @@ body {
   overflow: auto; /* Izinkan scroll jika konten lebih tinggi dari viewport */
 }
 /* Tambahkan gaya input yang Anda berikan */
+/* CSS yang Anda berikan */
+.card {
+  background-color: rgba(255, 255, 255, 0.1); /* Card background */
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Menyusun elemen secara vertikal */
+}
+
+h3 {
+  color: #f4f0ff; /* Warna judul */
+  margin-bottom: 10px; /* Jarak bawah judul */
+}
+
+.input {
+  width: 95%; /* Memastikan input memiliki lebar penuh */
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none; /* Mencegah perubahan ukuran textarea */
+}
+
+.button {
+  background-color: #007bff; /* Primary button color */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+.note-list,
+.task-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.note,
+.task {
+  background-color: #ffffff23; /* Background untuk catatan */
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  word-wrap: break-word; /* Memastikan teks membungkus */
+  overflow-wrap: break-word; /* Memastikan teks membungkus */
+}
+
+.navigation {
+  margin-top: 20px;
+}
+
+.navigation ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.navigation li {
+  padding: 5px 0;
+  color: #f4f0ff; /* Color for navigation items */
+}
+.task-list > .li-tugas {
+  background-color: #ffffff23; /* Light background for list items */
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
